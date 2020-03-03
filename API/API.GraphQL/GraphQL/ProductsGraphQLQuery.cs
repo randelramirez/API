@@ -4,6 +4,7 @@ using GraphQL.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.GraphQL.GraphQL
@@ -18,10 +19,36 @@ namespace API.GraphQL.GraphQL
                 resolve: context => productService.GetAll()
             );
 
+            Field<ProductType>(
+               name: "product",
+               arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
+               resolve: context =>
+               {
+                   var user = (ClaimsPrincipal)context.UserContext;
+                   // do user checking based on user claims (Authorization)
+
+                   var id = context.GetArgument<int>("id");
+                   return productService.GetOneById(id);
+               }
+           );
+
             Field<ListGraphType<SupplierType>>(
                 name: "suppliers",
                 resolve: context => supplierService.GetAll()
             );
+
+            Field<SupplierType>(
+               name: "supplier",
+               arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
+               resolve: context =>
+               {
+                   var user = (ClaimsPrincipal)context.UserContext;
+                   // do user checking based on user claims (Authorization)
+
+                   var id = context.GetArgument<int>("id");
+                   return supplierService.GetOneById(id);
+               }
+           );
         }
     }
 }

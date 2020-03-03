@@ -22,10 +22,12 @@ namespace API.DataStore.Extensions
 
             void createSuppliers()
             {
-                var suppliers = new List<Supplier>();
-                suppliers.Add(new Supplier { Name = "HP", Address = "Mckinley" });
-                suppliers.Add(new Supplier { Name = "Apple", Address = "Cupertino" });
-                suppliers.Add(new Supplier { Name = "Microsoft", Address = "Seattle" });
+                var suppliers = new List<Supplier>
+                {
+                    new Supplier { Name = "HP", Address = "Mckinley" },
+                    new Supplier { Name = "Apple", Address = "Cupertino" },
+                    new Supplier { Name = "Microsoft", Address = "Seattle" }
+                };
 
                 suppliers.ForEach(s => dataContext.Add(s));
                 dataContext.SaveChanges();

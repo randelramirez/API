@@ -61,6 +61,7 @@ namespace API.GraphQL
                 o.ExposeExceptions = environment.IsDevelopment();
             })
             .AddGraphTypes(ServiceLifetime.Scoped)
+            .AddUserContextBuilder(context => context.User) // so we can access claims on query resolvers
             .AddDataLoader(); ;
 
             //needed for .NET CORE 3.X
@@ -71,7 +72,7 @@ namespace API.GraphQL
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+        public void Configure(IApplicationBuilder app,
             ApiDataContext dataContext /*we added the DataContext here to seed the database and development purposes*/)
         {
             app.UseGraphQL<ProductsGraphQLSchema>();

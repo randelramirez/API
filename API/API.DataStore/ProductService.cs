@@ -22,6 +22,11 @@ namespace API.DataStore
             return await this.context.Products.AsNoTracking().ToListAsync();
         }
 
+        public async Task<Product> GetOneById(int productId)
+        {
+            return await this.context.Products.FindAsync(productId);
+        }
+
         public async Task<List<Product>> GetBySupplierId(int supplierId)
         {
             return await this.context.Products.Where(p => p.SupplierId == supplierId).ToListAsync();

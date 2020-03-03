@@ -22,7 +22,7 @@ namespace API.DataStore
             return await this.context.Suppliers.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Supplier> GetById(int id)
+        public async Task<Supplier> GetOneById(int id)
         {
             return await this.context.FindAsync<Supplier>(id);
         }
