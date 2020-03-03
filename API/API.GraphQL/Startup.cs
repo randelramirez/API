@@ -52,6 +52,8 @@ namespace API.GraphQL
             services.AddScoped<SupplierService>();
 
             services.AddScoped<ProductsGraphQLSchema>();
+            // workaround for threading issues in DbContext
+            services.AddScoped<IDocumentExecuter, EfDocumentExecuter>();
 
             services.AddGraphQL(o =>
             {

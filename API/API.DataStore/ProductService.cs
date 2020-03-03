@@ -27,7 +27,7 @@ namespace API.DataStore
             return await this.context.Products.Where(p => p.SupplierId == supplierId).ToListAsync();
         }
 
-
+        // For data loader
         public async Task<ILookup<int, Product>> GetBySupplierIds(IEnumerable<int> supplierIds)
         {
             var products = await this.context.Products.Where(p => supplierIds.Contains(p.SupplierId)).ToListAsync();
