@@ -11,11 +11,16 @@ namespace API.GraphQL.GraphQL
     public class ProductsGraphQLQuery : ObjectGraphType
     {
 
-        public ProductsGraphQLQuery(ProductService productService)
+        public ProductsGraphQLQuery(ProductService productService, SupplierService supplierService)
         {
             Field<ListGraphType<ProductType>>(
                 name: "products",
                 resolve: context => productService.GetAll()
+            );
+
+            Field<ListGraphType<SupplierType>>(
+                name: "suppliers",
+                resolve: context => supplierService.GetAll()
             );
         }
     }
