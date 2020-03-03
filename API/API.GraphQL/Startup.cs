@@ -45,7 +45,7 @@ namespace API.GraphQL
                     sql => sql.MigrationsAssembly(apiDataContextAssembly));
 
 
-            }, ServiceLifetime.Transient);
+            });
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<ProductService>();

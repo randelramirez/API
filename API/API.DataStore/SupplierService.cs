@@ -19,12 +19,19 @@ namespace API.DataStore
 
         public async Task<List<Supplier>> GetAll()
         {
-            return await this.context.Suppliers.ToListAsync();
+            return await this.context.Suppliers.AsNoTracking().ToListAsync();
         }
 
         public async Task<Supplier> GetById(int id)
         {
             return await this.context.FindAsync<Supplier>(id);
+        }
+
+        public async Task<Supplier> GetByProductId(int id)
+        {
+
+            var product = await this.context.Products.Include(p => p.Supplier).AsNoTracking().FirstAsync(p => p.Id == id);
+            return product.Supplier;
         }
     }
 }

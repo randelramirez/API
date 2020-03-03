@@ -6,6 +6,11 @@ namespace API.Core
 {
     public class Supplier
     {
+        public Supplier()
+        {
+            this.Products = new List<Product>();
+        }
+
         public int Id { get; set; }
 
         public string Name { get; set; }
