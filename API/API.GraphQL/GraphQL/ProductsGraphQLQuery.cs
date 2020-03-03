@@ -1,5 +1,6 @@
 ﻿using API.DataStore;
 using API.GraphQL.GraphQL.Types;
+using GraphQL;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;

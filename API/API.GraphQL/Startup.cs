@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using API.DataStore;
 using API.DataStore.Extensions;
 using API.GraphQL.GraphQL.Types;
@@ -12,11 +7,11 @@ using GraphQL.Server.Ui.GraphiQL;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace API.GraphQL
 {
@@ -44,15 +39,13 @@ namespace API.GraphQL
                 options.UseSqlServer(Configuration.GetConnectionString("API_DataContext"),
                     sql => sql.MigrationsAssembly(apiDataContextAssembly));
 
-
             });
 
-            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<ProductService>();
             services.AddScoped<SupplierService>();
 
             services.AddScoped<ProductsGraphQLSchema>();
-            // workaround for threading issues in DbContext, might no longer be n
+            // workaround for threading issues in DbContext, might no longer be newer versions?
             services.AddScoped<IDocumentExecuter, EfDocumentExecuter>();
 
             services.AddGraphQL(options =>
@@ -60,18 +53,10 @@ namespace API.GraphQL
                 options.EnableMetrics = true;
                 options.ExposeExceptions = environment.IsDevelopment();
             })
-
+            .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
             .AddGraphTypes(ServiceLifetime.Scoped)
-            .AddUserContextBuilder(context => context.User) // so we can access claims on query resolvers
+            //.AddUserContextBuilder(context => context.User) // so we can access claims on query resolvers
             .AddDataLoader();
-
-            //needed for .NET CORE 3.X
-            // might not be needed in newer version of graphql-dotnet
-            services.Configure<IISServerOptions>(options =>
-            {
-                options.AllowSynchronousIO = true;
-            });
-
 
         }
 
@@ -84,8 +69,6 @@ namespace API.GraphQL
             app.UseGraphiQLServer(new GraphiQLOptions()); // graphiql
 
             dataContext.SeedData();
-
-
         }
     }
 }
