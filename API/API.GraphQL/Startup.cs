@@ -52,23 +52,27 @@ namespace API.GraphQL
             services.AddScoped<SupplierService>();
 
             services.AddScoped<ProductsGraphQLSchema>();
-            // workaround for threading issues in DbContext
+            // workaround for threading issues in DbContext, might no longer be n
             services.AddScoped<IDocumentExecuter, EfDocumentExecuter>();
 
-            services.AddGraphQL(o =>
+            services.AddGraphQL(options =>
             {
-                o.EnableMetrics = true;
-                o.ExposeExceptions = environment.IsDevelopment();
+                options.EnableMetrics = true;
+                options.ExposeExceptions = environment.IsDevelopment();
             })
+
             .AddGraphTypes(ServiceLifetime.Scoped)
             .AddUserContextBuilder(context => context.User) // so we can access claims on query resolvers
-            .AddDataLoader(); ;
+            .AddDataLoader();
 
             //needed for .NET CORE 3.X
+            // might not be needed in newer version of graphql-dotnet
             services.Configure<IISServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

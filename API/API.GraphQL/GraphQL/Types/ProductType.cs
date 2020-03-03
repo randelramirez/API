@@ -19,7 +19,7 @@ namespace API.GraphQL.GraphQL.Types
 
             Field<SupplierType>(
                 name: nameof(Product.Supplier),
-                resolve: context => supplierService.GetOneById(context.Source.Id));
+                resolve: context => supplierService.GetOneById(context.Source.SupplierId));
         }
     }
 }
