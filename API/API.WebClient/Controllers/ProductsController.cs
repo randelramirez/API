@@ -32,7 +32,15 @@ namespace API.WebClient.Controllers
             var product = await productGraphClient.GetProduct(productId);
 
             //return View(product);
-            return new JsonResult(product);
+            //return new JsonResult(product);
+            return new JsonResult(new
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Status = product.Status.ToString(),
+                Supplier = new { Id = product.Supplier.Id, Name = product.Supplier.Name, Address = product.Supplier.Address }
+            });
         }
     }
 }

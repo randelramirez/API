@@ -30,7 +30,15 @@ namespace API.WebClient.Controllers
         public async Task<IActionResult> SupplierDetail(int supplierId)
         {
             var supplier = await supplierGraphClient.GetSupplier(supplierId);
-            return new JsonResult(supplier);
+            //return new JsonResult(supplier);
+            return new JsonResult(new
+            {
+                Id = supplier.Id,
+                Name = supplier.Name,
+                Address = supplier.Address,
+                Products = supplier.Products.ToList()
+                .Select(p => new { Id = p.Id, Name = p.Name, Price = p.Price, Status = p.Status.ToString() })
+            });
         }
     }
 }

@@ -7,5 +7,6 @@ namespace API.WebClient.Models
 {
     public class SupplierModel
     {
+
     }
 }

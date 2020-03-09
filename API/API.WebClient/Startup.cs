@@ -30,7 +30,7 @@ namespace API.WebClient
             services.AddControllersWithViews()
             //.AddNewtonsoftJson(options =>
             //{
-            //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            //    //options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             //});
             .AddJsonOptions(options => { });
             services.AddSingleton(t => new GraphQLClient(this.config["ApiWebClientUri"]));
@@ -61,6 +61,10 @@ namespace API.WebClient
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Products}/{action=Index}/{productId?}");
+
+                endpoints.MapControllerRoute(
+                    name: "Suppliers",
+                    pattern: "{controller=Supplier}/{action=Index}/{supplierId?}");
             });
         }
     }
