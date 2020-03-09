@@ -1,0 +1,22 @@
+﻿@model API.WebClient.Models.SupplierViewModel
+
+@{
+    ViewData["Title"] = "SupplierDetail";
+}
+
+<h1>SupplierDetail</h1>
+
+<h2>ID: @Model.Id</h2>
+<h2>ID: @Model.Name</h2>
+
+<div>
+    <h3>Products(This was displayed by using apollo client)</h3>
+    <div id="products"></div>
+</div>
+
+
+<script src="https://unpkg.com/apollo-client-browser@1.9.0"></script>
+<script src="~/products.js"></script>
+<script>
+    renderProducts(@Model.Id);
+</script>

@@ -1,0 +1,21 @@
+﻿@model List<API.WebClient.Models.SupplierViewModel>
+
+<h6>Supplier</h6>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var supplier in Model)
+        {
+            <tr>
+                <td><a asp-action="SupplierDetail" asp-route-supplierid="@supplier.Id">@supplier.Name</a></td>
+                <td>@supplier.Address</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

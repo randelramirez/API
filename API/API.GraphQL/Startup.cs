@@ -55,10 +55,12 @@ namespace API.GraphQL
                 options.EnableMetrics = true;
                 options.ExposeExceptions = environment.IsDevelopment();
             })
-
             .AddGraphTypes(ServiceLifetime.Scoped)
             .AddUserContextBuilder(context => context.User) // so we can access claims on query resolvers
             .AddDataLoader();
+
+            //for same origin policy. CORS
+            services.AddCors();
 
             //needed for .NET CORE 3.X
             // might not be needed in newer version of graphql-dotnet
@@ -74,6 +76,15 @@ namespace API.GraphQL
         public void Configure(IApplicationBuilder app,
             ApiDataContext dataContext /*we added the DataContext here to seed the database and development purposes*/)
         {
+
+            app.UseCors(builder =>
+            {
+                // do not allow any origin in production code
+                builder.AllowAnyOrigin(/*specify the urle here*/)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+
             app.UseGraphQL<ProductsGraphQLSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
             app.UseGraphiQLServer(new GraphiQLOptions()); // graphiql

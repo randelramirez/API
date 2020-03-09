@@ -1,4 +1,5 @@
 ﻿using API.Core;
+using API.WebClient.Models;
 using GraphQL.Client;
 using GraphQL.Common.Request;
 using System;
@@ -17,7 +18,7 @@ namespace API.WebClient.Clients
             this.client = client;
         }
 
-        public async Task<Supplier> GetSupplier(int id)
+        public async Task<SupplierViewModel> GetSupplier(int id)
         {
             var query = new GraphQLRequest
             {
@@ -31,7 +32,7 @@ namespace API.WebClient.Clients
                 Variables = new { supplierId = id }
             };
             var response = await client.PostAsync(query);
-            return response.GetDataFieldAs<Supplier>("supplier");
+            return response.GetDataFieldAs<SupplierViewModel>("supplier");
         }
     }
 }

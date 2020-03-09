@@ -8,6 +8,6 @@ namespace API.WebClient.Models
 {
     public class ProductsContainer
     {
-        public List<Product> Products { get; set; }
+        public List<ProductViewModel> Products { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace API.WebClient.Models
 {
     public class SuppliersContainer
     {
-        public List<Supplier> Suppliers { get; set; }
+        public List<SupplierViewModel> Suppliers { get; set; }
     }
 }

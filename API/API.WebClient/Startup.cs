@@ -48,6 +48,7 @@ namespace API.WebClient
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseRouting();
 
 

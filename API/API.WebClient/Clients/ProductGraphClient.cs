@@ -17,21 +17,21 @@ namespace API.WebClient.Clients
             _client = client;
         }
 
-        public async Task<Product> GetProduct(int id)
+        public async Task<ProductViewModel> GetProduct(int id)
         {
             var query = new GraphQLRequest
             {
                 Query = @" 
                 query productQuery($productId: ID!)
                 { product(id: $productId) 
-                    { id name price  
+                    { id name status price  
                       supplier { id name address }
                     }
                 }",
                 Variables = new { productId = id }
             };
             var response = await _client.PostAsync(query);
-            return response.GetDataFieldAs<Product>("product");
+            return response.GetDataFieldAs<ProductViewModel>("product");
         }
 
         //public async Task<ProductReviewModel> AddReview(ProductReviewInputModel review)
